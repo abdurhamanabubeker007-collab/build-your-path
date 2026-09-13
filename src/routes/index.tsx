@@ -1015,7 +1015,7 @@ function Index() {
         <div className="mx-auto flex min-h-screen w-full max-w-none flex-col px-2 py-4 sm:px-6 sm:py-8">
           <header className="relative mb-6 flex flex-col items-center gap-3 text-center sm:mb-12 sm:gap-5">
             <div className="absolute left-0 top-0 flex items-center gap-2">
-              <DropdownMenu>
+              <DropdownMenu open={menuAcik} onOpenChange={setMenuAcik}>
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="outline"
