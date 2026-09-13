@@ -1640,7 +1640,7 @@ function Index() {
           </DialogContent>
         </Dialog>
 
-        <Dialog open={ayarlarAcik} onOpenChange={setAyarlarAcik}>
+        <Dialog open={ayarlarAcik} onOpenChange={panelKapat(setAyarlarAcik)}>
           <DialogContent className="flex h-dvh max-h-none w-full max-w-full flex-col gap-3 rounded-none border-0 p-4 sm:p-6">
             <DialogHeader className="shrink-0">
               <DialogTitle>{tr("ayarlar")}</DialogTitle>
