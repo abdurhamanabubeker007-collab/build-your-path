@@ -1104,7 +1104,12 @@ function Index() {
                         <Mail className="mr-2 h-4 w-4" />
                         Aidat Hatırlatma E-postası
                       </DropdownMenuItem>
-                      <DropdownMenuItem onSelect={() => setAyarlarAcik(true)}>
+                      <DropdownMenuItem
+                        onSelect={() => {
+                          menudenAcildi.current = true;
+                          setAyarlarAcik(true);
+                        }}
+                      >
                         <Settings className="mr-2 h-4 w-4" />
                         {tr("ayarlar")}
                       </DropdownMenuItem>
