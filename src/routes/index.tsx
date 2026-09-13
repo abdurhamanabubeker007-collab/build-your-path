@@ -1085,6 +1085,7 @@ function Index() {
                       <DropdownMenuLabel>Yönetim</DropdownMenuLabel>
                       <DropdownMenuItem
                         onSelect={() => {
+                          menudenAcildi.current = true;
                           setAyarlarAcik(false);
                           setGrupTaslak(gruplar.map((g) => ({ ...g })));
                           setGruplarAcik(true);
