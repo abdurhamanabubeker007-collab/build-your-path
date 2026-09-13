@@ -696,31 +696,15 @@ function Index() {
 
   const hafizlikPdf = async () => {
     const { hafiz } = await tazeListeler();
-    const gunler = tr("haftaGun").slice(0, 5);
     listeYazdir({
       altBaslik: "Hafızlık Takip Listesi",
-      bilgi: [`Hafta: ${haftaEtiket(seciliHafta)}`, `Hocaefendi: ${hoca}`],
+      bilgi: [`Hocaefendi: ${hoca}`],
       sutunlar: [
-        { baslik: "#", genislik: "6%", hiza: "center" },
-        { baslik: "Talebe", genislik: "34%" },
-        ...gunler.map((g) => ({
-          baslik: g.slice(0, 3),
-          genislik: "8%",
-          hiza: "center" as const,
-        })),
-        { baslik: "Sayfa", genislik: "10%", hiza: "center" },
-        { baslik: "Cüz", genislik: "10%", hiza: "center" },
+        { baslik: "İsim", genislik: "60%" },
+        { baslik: "Sayfa", genislik: "20%", hiza: "center" },
+        { baslik: "Cüz", genislik: "20%", hiza: "center" },
       ],
-      satirlar: hafiz.map((t, i) => {
-        const verilen = getDersGunler(t, seciliDers, seciliHafta);
-        return [
-          i + 1,
-          t.isim,
-          ...gunler.map((_, gi) => (verilen.includes(gi) ? "✓" : "–")),
-          t.sayfa,
-          cuzHesapla(t.sayfa),
-        ];
-      }),
+      satirlar: hafiz.map((t) => [t.isim, t.sayfa, cuzHesapla(t.sayfa)]),
     });
   };
 
