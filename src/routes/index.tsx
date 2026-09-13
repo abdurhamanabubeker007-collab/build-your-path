@@ -1821,11 +1821,11 @@ function Index() {
               )}
             </div>
             <DialogFooter className="shrink-0 sm:justify-between">
-              <Button variant="outline" className="gap-2" onClick={() => setAyarlarAcik(false)}>
+              <Button variant="outline" className="gap-2" onClick={ayarlarKapat}>
                 <ArrowLeft className="h-4 w-4" />
                 Geri dön
               </Button>
-              <Button variant="ghost" onClick={() => setAyarlarAcik(false)}>
+              <Button variant="ghost" onClick={ayarlarKapat}>
                 {tr("kapat")}
               </Button>
             </DialogFooter>
@@ -1897,7 +1897,7 @@ function Index() {
         <Dialog
           open={gruplarAcik}
           onOpenChange={(acik) => {
-            setGruplarAcik(acik);
+            panelKapat(setGruplarAcik)(acik);
             setGrupTaslak(acik ? gruplar.map((g) => ({ ...g })) : null);
           }}
         >
@@ -2012,7 +2012,7 @@ function Index() {
               )}
             </div>
             <DialogFooter>
-              <Button onClick={() => setGruplarAcik(false)}>Kapat</Button>
+              <Button onClick={gruplarKapat}>Kapat</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
