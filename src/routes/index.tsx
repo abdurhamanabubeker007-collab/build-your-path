@@ -420,6 +420,19 @@ function Index() {
   const [menuAcik, setMenuAcik] = useState(false);
   const [ayarlarAcik, setAyarlarAcik] = useState(false);
   const [mailAcik, setMailAcik] = useState(false);
+  // Panel menüden açıldıysa, kapanınca menüye geri dön
+  const menudenAcildi = useRef(false);
+  const panelKapat =
+    (kapat: (v: boolean) => void) =>
+    (acik: boolean) => {
+      kapat(acik);
+      if (!acik && menudenAcildi.current) {
+        menudenAcildi.current = false;
+        setMenuAcik(true);
+      }
+    };
+  const ayarlarKapat = () => panelKapat(setAyarlarAcik)(false);
+  const gruplarKapat = () => panelKapat(setGruplarAcik)(false);
   const [aidatIndirAy, setAidatIndirAy] = useState<string>("buAy");
   const [parolaDegistirAcik, setParolaDegistirAcik] = useState(false);
   const [eskiParola, setEskiParola] = useState("");
@@ -1002,7 +1015,7 @@ function Index() {
         <div className="mx-auto flex min-h-screen w-full max-w-none flex-col px-2 py-4 sm:px-6 sm:py-8">
           <header className="relative mb-6 flex flex-col items-center gap-3 text-center sm:mb-12 sm:gap-5">
             <div className="absolute left-0 top-0 flex items-center gap-2">
-              <DropdownMenu>
+              <DropdownMenu open={menuAcik} onOpenChange={setMenuAcik}>
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="outline"
@@ -1072,6 +1085,7 @@ function Index() {
                       <DropdownMenuLabel>Yönetim</DropdownMenuLabel>
                       <DropdownMenuItem
                         onSelect={() => {
+                          menudenAcildi.current = true;
                           setAyarlarAcik(false);
                           setGrupTaslak(gruplar.map((g) => ({ ...g })));
                           setGruplarAcik(true);
@@ -1081,11 +1095,21 @@ function Index() {
                         Grupları düzenle
                       </DropdownMenuItem>
 
-                      <DropdownMenuItem onSelect={() => setMailAcik(true)}>
+                      <DropdownMenuItem
+                        onSelect={() => {
+                          menudenAcildi.current = true;
+                          setMailAcik(true);
+                        }}
+                      >
                         <Mail className="mr-2 h-4 w-4" />
                         Aidat Hatırlatma E-postası
                       </DropdownMenuItem>
-                      <DropdownMenuItem onSelect={() => setAyarlarAcik(true)}>
+                      <DropdownMenuItem
+                        onSelect={() => {
+                          menudenAcildi.current = true;
+                          setAyarlarAcik(true);
+                        }}
+                      >
                         <Settings className="mr-2 h-4 w-4" />
                         {tr("ayarlar")}
                       </DropdownMenuItem>
@@ -1601,7 +1625,7 @@ function Index() {
           </DialogContent>
         </Dialog>
 
-        <Dialog open={mailAcik} onOpenChange={setMailAcik}>
+        <Dialog open={mailAcik} onOpenChange={panelKapat(setMailAcik)}>
           <DialogContent className="flex h-dvh max-h-none w-full max-w-full flex-col gap-3 rounded-none border-0 p-4 sm:p-6">
             <DialogHeader className="shrink-0">
               <DialogTitle>E-posta Merkezi</DialogTitle>
@@ -1616,7 +1640,7 @@ function Index() {
           </DialogContent>
         </Dialog>
 
-        <Dialog open={ayarlarAcik} onOpenChange={setAyarlarAcik}>
+        <Dialog open={ayarlarAcik} onOpenChange={panelKapat(setAyarlarAcik)}>
           <DialogContent className="flex h-dvh max-h-none w-full max-w-full flex-col gap-3 rounded-none border-0 p-4 sm:p-6">
             <DialogHeader className="shrink-0">
               <DialogTitle>{tr("ayarlar")}</DialogTitle>
@@ -1797,11 +1821,11 @@ function Index() {
               )}
             </div>
             <DialogFooter className="shrink-0 sm:justify-between">
-              <Button variant="outline" className="gap-2" onClick={() => setAyarlarAcik(false)}>
+              <Button variant="outline" className="gap-2" onClick={ayarlarKapat}>
                 <ArrowLeft className="h-4 w-4" />
                 Geri dön
               </Button>
-              <Button variant="ghost" onClick={() => setAyarlarAcik(false)}>
+              <Button variant="ghost" onClick={ayarlarKapat}>
                 {tr("kapat")}
               </Button>
             </DialogFooter>
@@ -1873,7 +1897,7 @@ function Index() {
         <Dialog
           open={gruplarAcik}
           onOpenChange={(acik) => {
-            setGruplarAcik(acik);
+            panelKapat(setGruplarAcik)(acik);
             setGrupTaslak(acik ? gruplar.map((g) => ({ ...g })) : null);
           }}
         >
@@ -1988,7 +2012,7 @@ function Index() {
               )}
             </div>
             <DialogFooter>
-              <Button onClick={() => setGruplarAcik(false)}>Kapat</Button>
+              <Button onClick={gruplarKapat}>Kapat</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
