@@ -2705,8 +2705,10 @@ function DuzenleDiyalog({
     if (talebe && sayfaOdakli && sayfaInputRef.current) {
       // Radix Dialog'un kendi odağını tamamlaması için kısa gecikme
       const id = window.setTimeout(() => {
-        sayfaInputRef.current?.focus();
-        sayfaInputRef.current?.select();
+        const input = sayfaInputRef.current;
+        if (!input) return;
+        input.focus();
+        input.setSelectionRange(input.value.length, input.value.length);
       }, 180);
       return () => window.clearTimeout(id);
     }
@@ -2754,8 +2756,10 @@ function DuzenleDiyalog({
         onOpenAutoFocus={(e) => {
           if (sayfaOdakli) {
             e.preventDefault();
-            sayfaInputRef.current?.focus();
-            sayfaInputRef.current?.select();
+            const input = sayfaInputRef.current;
+            if (!input) return;
+            input.focus();
+            input.setSelectionRange(input.value.length, input.value.length);
           }
         }}
       >
