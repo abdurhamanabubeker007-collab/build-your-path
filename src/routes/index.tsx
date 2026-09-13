@@ -1095,7 +1095,12 @@ function Index() {
                         Grupları düzenle
                       </DropdownMenuItem>
 
-                      <DropdownMenuItem onSelect={() => setMailAcik(true)}>
+                      <DropdownMenuItem
+                        onSelect={() => {
+                          menudenAcildi.current = true;
+                          setMailAcik(true);
+                        }}
+                      >
                         <Mail className="mr-2 h-4 w-4" />
                         Aidat Hatırlatma E-postası
                       </DropdownMenuItem>
