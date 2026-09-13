@@ -1625,7 +1625,7 @@ function Index() {
           </DialogContent>
         </Dialog>
 
-        <Dialog open={mailAcik} onOpenChange={setMailAcik}>
+        <Dialog open={mailAcik} onOpenChange={panelKapat(setMailAcik)}>
           <DialogContent className="flex h-dvh max-h-none w-full max-w-full flex-col gap-3 rounded-none border-0 p-4 sm:p-6">
             <DialogHeader className="shrink-0">
               <DialogTitle>E-posta Merkezi</DialogTitle>
