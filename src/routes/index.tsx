@@ -420,6 +420,19 @@ function Index() {
   const [menuAcik, setMenuAcik] = useState(false);
   const [ayarlarAcik, setAyarlarAcik] = useState(false);
   const [mailAcik, setMailAcik] = useState(false);
+  // Panel menüden açıldıysa, kapanınca menüye geri dön
+  const menudenAcildi = useRef(false);
+  const panelKapat =
+    (kapat: (v: boolean) => void) =>
+    (acik: boolean) => {
+      kapat(acik);
+      if (!acik && menudenAcildi.current) {
+        menudenAcildi.current = false;
+        setMenuAcik(true);
+      }
+    };
+  const ayarlarKapat = () => panelKapat(setAyarlarAcik)(false);
+  const gruplarKapat = () => panelKapat(setGruplarAcik)(false);
   const [aidatIndirAy, setAidatIndirAy] = useState<string>("buAy");
   const [parolaDegistirAcik, setParolaDegistirAcik] = useState(false);
   const [eskiParola, setEskiParola] = useState("");
